@@ -8,7 +8,7 @@ Rules of the environment are in `RULES.md`. The scope is phases 0–9. Phases 10
 | **1. CPU 1v1** ✅ | Python reference engine: damage, types, move ordering, fainting | Thousands of randomized unit tests pass |
 | **2. CPU 3v3** ✅ | Switching, forced switching, action masks, turn limit, full battle loop, replay JSON, terminal renderer | Greedy/random agents can complete battles; any replay renders turn by turn |
 | **3. Batched CPU** ✅ | Structure-of-arrays representation; remove object-heavy hot path | Establish CPU steps/sec baseline |
-| **4. PyTorch CUDA** | 1k → 16k → 65k+ simultaneous environments | Exact agreement with reference simulator |
+| **4. PyTorch CUDA** ✅ (benchmark pending) | 1k → 16k → 65k+ simultaneous environments | Exact agreement with reference simulator |
 | **5. Systems benchmark** | RTX 4060 scaling curves, profiling, state-size analysis | Demonstrate when GPU overtakes CPU |
 | **5b. Cheap mechanics** | Accuracy (sub-90% moves), recoil, drain, Body Press/Psyshock stat overrides, Sucker Punch, optionally multi-hit; roster updated to the real competitive moves | Each mechanic in both engines with exact agreement; throughput cost of each measured against the Phase 5 baseline |
 | **6. Triton** | Fuse turn-resolution/damage kernels and reduce intermediate tensors | Meaningful speedup over PyTorch or explain why not |
