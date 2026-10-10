@@ -5,7 +5,6 @@ no downloaded data.
 """
 
 import pytest
-
 from build_data import MECHANICS, move_problems, move_record
 
 

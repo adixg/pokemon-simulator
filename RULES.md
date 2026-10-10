@@ -214,7 +214,7 @@ The next normal turn begins after all required replacements have been selected.
 
 ### Turn Limit
 
-A battle lasts at most **100 normal turns**. Forced-switch phases do not count as turns.
+A battle lasts at most **100 normal turns**. Forced-switch phases do not count as turns. Normal turns are numbered from 1, and this number is the `turn` used by the random numbers in section 10.
 
 If no player has won when turn 100 has resolved, the battle ends in a **draw**.
 
