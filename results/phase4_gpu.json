@@ -1,0 +1,123 @@
+{
+ "machine": {
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "gpu_memory_gb": 8.0,
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+ },
+ "settings": {
+  "seconds": 2.0,
+  "trials": 3
+ },
+ "rows": [
+  {
+   "engine": "torch_eager",
+   "batch": 1024,
+   "env_steps_per_s": 516622.7280300076,
+   "end_to_end_per_s": 376109.00246760354
+  },
+  {
+   "engine": "torch_eager",
+   "batch": 4096,
+   "env_steps_per_s": 2070134.727703087,
+   "end_to_end_per_s": 1501072.419284613
+  },
+  {
+   "engine": "torch_eager",
+   "batch": 16384,
+   "env_steps_per_s": 8160329.4110908555,
+   "end_to_end_per_s": 5896659.256017523
+  },
+  {
+   "engine": "torch_eager",
+   "batch": 65536,
+   "env_steps_per_s": 32250412.103038114,
+   "end_to_end_per_s": 23382818.200193025
+  },
+  {
+   "engine": "torch_eager",
+   "batch": 262144,
+   "env_steps_per_s": 117365837.15028036,
+   "end_to_end_per_s": 79912571.39764085
+  },
+  {
+   "engine": "torch_eager",
+   "batch": 1048576,
+   "env_steps_per_s": 79651165.24038796,
+   "end_to_end_per_s": 53696631.05156826
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 1024,
+   "env_steps_per_s": 4143822.7965274,
+   "end_to_end_per_s": 963353.4887774631
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 4096,
+   "env_steps_per_s": 16485175.018915249,
+   "end_to_end_per_s": 3736677.053845288
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 16384,
+   "env_steps_per_s": 63939715.91952047,
+   "end_to_end_per_s": 14990578.278827514
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 65536,
+   "env_steps_per_s": 267374003.97847813,
+   "end_to_end_per_s": 61094526.371975526
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 262144,
+   "env_steps_per_s": 343838804.71420676,
+   "end_to_end_per_s": 140136860.33638293
+  },
+  {
+   "engine": "torch_compile",
+   "batch": 1048576,
+   "env_steps_per_s": 217946010.12436974,
+   "end_to_end_per_s": 96305100.99044988
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 1024,
+   "env_steps_per_s": 2554729.8148695277,
+   "end_to_end_per_s": 829244.2597944125
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 4096,
+   "env_steps_per_s": 10379342.645441528,
+   "end_to_end_per_s": 3307881.0418680585
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 16384,
+   "env_steps_per_s": 40806311.885437496,
+   "end_to_end_per_s": 12931410.520041462
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 65536,
+   "env_steps_per_s": 157387630.9925149,
+   "end_to_end_per_s": 52740833.50876704
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 262144,
+   "env_steps_per_s": 262327404.56348923,
+   "end_to_end_per_s": 119995274.64571187
+  },
+  {
+   "engine": "torch_cudagraph",
+   "batch": 1048576,
+   "env_steps_per_s": 160686741.9225292,
+   "end_to_end_per_s": 80497255.52062207
+  }
+ ]
+}

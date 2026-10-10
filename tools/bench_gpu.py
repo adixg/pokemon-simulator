@@ -87,7 +87,9 @@ def main() -> None:
     for name in args.configs:
         mode = CONFIGS[name]
         for n in args.sizes:
-            # A fresh compiled function per batch size, each specialized to its shapes.
+            # A fresh compilation per batch size, each specialized to its shapes. Without the
+            # reset, dynamo's per-function cache hits its recompile limit and silently runs eager.
+            torch._dynamo.reset()
             step_fn = gpu.step_tensors if mode is None else gpu.compiled_step(mode)
             runs = [bench(n, step_fn, args.seconds, t, cudagraph=name == "cudagraph") for _ in range(args.trials)]
             result = {k: statistics.median(r[k] for r in runs) for k in runs[0]}
