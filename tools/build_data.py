@@ -89,6 +89,25 @@ CONDITIONAL = {
     "snore", "steelroller", "suckerpunch", "thief", "upperhand", "venoshock", "weatherball",
 }
 MIN_ACCURACY = 90
+
+# Mechanics that roadmap step 5b brings back, and what each one unlocks.
+# A data version lists the mechanics it enables; v1 enables none.
+MECHANICS = {
+    "accuracy": "moves below MIN_ACCURACY",
+    "recoil": "the recoil key",
+    "drain": "the drain key",
+    "multihit": "the multihit key",
+    "stat_override": "the overrideOffensiveStat and overrideDefensiveStat keys (Body Press, Psyshock)",
+    "suckerpunch": "Sucker Punch, which fails unless the target chose a damaging move",
+}
+MECHANIC_KEYS = {
+    "recoil": {"recoil"},
+    "drain": {"drain"},
+    "multihit": {"multihit", "smartTarget"},     # smartTarget only matters in doubles
+    "stat_override": {"overrideOffensiveStat", "overrideDefensiveStat"},
+}
+ENABLED = {"v1": frozenset()}
+VERSION = "v1"
 SINGLE_TARGETS = {"normal", "any", "allAdjacent", "allAdjacentFoes"}
 
 # damageTaken codes in typechart.js -> effectiveness in quarters (RULES.md 4)
@@ -122,17 +141,20 @@ def stat(base: int, hp: bool) -> int:
     return core + 60 if hp else core + 5
 
 
-def move_problems(move_id: str, move: dict) -> list[str]:
+def move_problems(move_id: str, move: dict, mechanics: frozenset[str] = frozenset()) -> list[str]:
+    """Reasons the move is not allowed with the given mechanics enabled."""
+    excluded = EXCLUDED_KEYS - {k for m in mechanics for k in MECHANIC_KEYS.get(m, ())}
     problems = []
     if move["category"] == "Status" or not move["basePower"]:
         problems.append("not a damaging move")
-    if keys := sorted(EXCLUDED_KEYS & move.keys()):
+    if keys := sorted(excluded & move.keys()):
         problems.append(f"excluded mechanics {keys}")
     if flags := sorted(EXCLUDED_FLAGS & move["flags"].keys()):
         problems.append(f"excluded flags {flags}")
-    if move_id in CONDITIONAL:
+    if move_id in CONDITIONAL and not (move_id == "suckerpunch" and "suckerpunch" in mechanics):
         problems.append("conditional power or success")
-    if move["accuracy"] is not True and move["accuracy"] < MIN_ACCURACY:
+    if (move["accuracy"] is not True and move["accuracy"] < MIN_ACCURACY
+            and "accuracy" not in mechanics):
         problems.append(f"accuracy {move['accuracy']} < {MIN_ACCURACY}")
     if move["target"] not in SINGLE_TARGETS:
         problems.append(f"target {move['target']}")
@@ -152,7 +174,36 @@ def learnable(species_id: str, move_id: str, pokedex: dict, learnsets: dict) -> 
     return False
 
 
+def move_record(move_id: str, move: dict) -> dict:
+    """The move as stored, including fields for mechanics v1 does not simulate.
+
+    `attack_stat` and `defense_stat` are explicit so Body Press (Defense as its
+    attacking stat) and Psyshock (targets Defense) need no special case.
+    """
+    physical = move["category"] == "Physical"
+    multihit = move.get("multihit")
+    return {
+        "id": move_id,
+        "name": move["name"],
+        "type": move["type"],
+        "category": move["category"],
+        "power": move["basePower"],
+        "priority": move["priority"],
+        "attack_stat": move.get("overrideOffensiveStat", "atk" if physical else "spa"),
+        "defense_stat": move.get("overrideDefensiveStat", "def" if physical else "spd"),
+        "accuracy": 100 if move["accuracy"] is True else move["accuracy"],
+        "never_misses": move["accuracy"] is True,
+        "recoil": move.get("recoil"),            # [numerator, denominator] of damage dealt
+        "drain": move.get("drain"),              # [numerator, denominator] of damage dealt
+        "multihit": [multihit, multihit] if isinstance(multihit, int) else multihit,  # [min, max]
+        "effect": move_id if move_id == "suckerpunch" else None,
+        "ignored_secondary": "secondary" in move,
+    }
+
+
 def build(refresh: bool) -> int:
+    mechanics = ENABLED[VERSION]
+    assert mechanics <= MECHANICS.keys(), mechanics - MECHANICS.keys()
     digests = fetch(refresh)
     pokedex = json.loads((RAW / "pokedex.json").read_text())
     moves = json.loads((RAW / "moves.json").read_text())
@@ -180,17 +231,8 @@ def build(refresh: bool) -> int:
         if move is None:
             errors.append(f"move {move_id}: not in moves.json")
             continue
-        errors += [f"move {move_id}: {p}" for p in move_problems(move_id, move)]
-        move_rows.append({
-            "id": move_id,
-            "name": move["name"],
-            "type": move["type"],
-            "category": move["category"],
-            "power": move["basePower"],
-            "priority": move["priority"],
-            "accuracy": 100 if move["accuracy"] is True else move["accuracy"],
-            "ignored_secondary": "secondary" in move,
-        })
+        errors += [f"move {move_id}: {p}" for p in move_problems(move_id, move, mechanics)]
+        move_rows.append(move_record(move_id, move))
 
     species_rows = []
     for species_id, loadout in ROSTER.items():
@@ -228,7 +270,10 @@ def build(refresh: bool) -> int:
             "built": date.today().isoformat(),
             "license": "Pokémon Showdown data, MIT License",
         },
-        "rules": {"level": 50, "iv": 31, "ev": 0, "min_accuracy": MIN_ACCURACY},
+        "rules": {
+            "level": 50, "iv": 31, "ev": 0, "min_accuracy": MIN_ACCURACY,
+            "mechanics": sorted(mechanics),
+        },
         "types": TYPES,
         "type_chart_eff4": type_chart,
         "moves": move_rows,

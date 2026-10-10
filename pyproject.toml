@@ -17,3 +17,4 @@ packages = ["src/pokearena"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["tools"]

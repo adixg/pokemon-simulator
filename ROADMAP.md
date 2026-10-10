@@ -10,6 +10,7 @@ Rules of the environment are in `RULES.md`. The scope is phases 0–9. Phases 10
 | **3. Batched CPU** | Structure-of-arrays representation; remove object-heavy hot path | Establish CPU steps/sec baseline |
 | **4. PyTorch CUDA** | 1k → 16k → 65k+ simultaneous environments | Exact agreement with reference simulator |
 | **5. Systems benchmark** | RTX 4060 scaling curves, profiling, state-size analysis | Demonstrate when GPU overtakes CPU |
+| **5b. Cheap mechanics** | Accuracy (sub-90% moves), recoil, drain, Body Press/Psyshock stat overrides, Sucker Punch, optionally multi-hit; roster updated to the real competitive moves | Each mechanic in both engines with exact agreement; throughput cost of each measured against the Phase 5 baseline |
 | **6. Triton** | Fuse turn-resolution/damage kernels and reduce intermediate tensors | Meaningful speedup over PyTorch or explain why not |
 | **7. Classical agents** | Random, greedy damage, heuristic switcher, simultaneous-move search | Establish meaningful agent baselines |
 | **8. PPO self-play** | GPU-resident observations → policy → actions → simulator → rollout buffer | Agent decisively beats random/greedy |
@@ -20,6 +21,7 @@ Rules of the environment are in `RULES.md`. The scope is phases 0–9. Phases 10
 - **1–4. Exact agreement** depends on the integer damage formula and the counter-based RNG in `RULES.md`. Build a differential test early: random states and actions run through both engines, every field compared.
 - **2. Replays and rendering.** A replay is `(teams, seed, actions)` plus a per-turn event log (move order, damage, effectiveness, faints, switches), so viewers never re-run the engine. It is a few KB of JSON per battle. The terminal renderer (`rich`: HP bars, moves, damage, effectiveness) reads replays and is the debugging tool from here on. Every later visual reads the same format.
 - **4. Before Triton**, try `torch.compile` and CUDA graphs on the step function. At 65k environments the step does little arithmetic per battle, so eager PyTorch is bound by kernel launches and memory traffic. Phase 6 compares against the best non-Triton version, not eager. Finished battles reset in place, with masking rather than per-environment branching.
+- **5b. Why here.** After Phase 5, so the core engines agree exactly on a small rule set and there is a clean throughput baseline to measure each mechanic against. Before Phase 7, so agents and the compute study use the richer game and nothing is retrained. These mechanics add no state that persists across turns: accuracy and multi-hit are draws from the counter-based RNG (indices already reserved), recoil and drain are one HP update after the hit, stat overrides are the per-move `attack_stat`/`defense_stat` already in the data, and Sucker Punch checks the opponent's chosen action. The data already carries every field these need (`accuracy`, `never_misses`, `recoil`, `drain`, `multihit`, `effect`); enabling them means adding the mechanic names to `ENABLED` in `tools/build_data.py` and updating the roster (Hydro Pump on Blastoise, Stone Edge on Tyranitar, Brave Bird and Body Press on Corviknight, Sucker Punch on Weavile). Recoil allows both active Pokémon to faint in one turn, which `RULES.md` section 6 already covers. Status conditions, stat stages, secondary effects and state-dependent power stay in Phase 10.
 - **7. Search must handle simultaneous moves.** Alternating-move minimax or MCTS assumes one player sees the other's choice. Use decoupled UCT (each player runs its own bandit at a node) or solve the small action-by-action matrix game at each node (LP or regret matching).
 - **9. Strength metric.** Win rate against random or greedy agents saturates quickly. Use a round-robin Elo among all agents, plus exploitability where it can be computed: exact solutions for 1v1, and for specific 3v3 team pairs if the reachable state set turns out small enough (measure this), otherwise an approximate best response trained against the frozen policy.
 
@@ -31,7 +33,7 @@ Rules of the environment are in `RULES.md`. The scope is phases 0–9. Phases 10
 
 ## Minimum shippable version
 
-Phases 0–5 + 7 + 8: "a Pokémon battle simulator at X M steps/s on an RTX 4060, Y× faster than CPU, with a PPO agent trained in Z minutes." Write it up and put it on the resume before continuing to 6 and 9.
+Phases 0–5, 5b, 7 and 8: "a Pokémon battle simulator at X M steps/s on an RTX 4060, Y× faster than CPU, with a PPO agent trained in Z minutes." Write it up and put it on the resume before continuing to 6 and 9.
 
 ## Deferred (10–12)
 

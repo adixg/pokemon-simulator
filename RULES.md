@@ -242,6 +242,8 @@ The following mechanics are intentionally excluded:
 
 These may be introduced individually in later versions only if they produce useful strategic behavior or a worthwhile systems problem.
 
+Planned for v1b (roadmap step 5b), because they add no state that persists across turns: move accuracy, recoil, drain, moves that use a different attacking or defending stat (Body Press, Psyshock), Sucker Punch, and optionally multi-hit moves. Everything else in this list and in section 3's exclusions waits for a later version.
+
 Completeness with Pokémon Showdown is explicitly **not** a project objective.
 
 ## 8. Teams

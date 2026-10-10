@@ -15,7 +15,8 @@
   "level": 50,
   "iv": 31,
   "ev": 0,
-  "min_accuracy": 90
+  "min_accuracy": 90,
+  "mechanics": []
  },
  "types": [
   "Normal",
@@ -407,7 +408,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -417,7 +425,14 @@
    "category": "Special",
    "power": 75,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 95,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -427,7 +442,14 @@
    "category": "Special",
    "power": 85,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -437,7 +459,14 @@
    "category": "Physical",
    "power": 100,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -447,7 +476,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -457,7 +493,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -467,7 +510,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -477,7 +527,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": true,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -487,7 +544,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -497,7 +561,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -507,7 +578,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -517,7 +595,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -527,7 +612,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -537,7 +629,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -547,7 +646,14 @@
    "category": "Physical",
    "power": 40,
    "priority": 1,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -557,7 +663,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -567,7 +680,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -577,7 +697,14 @@
    "category": "Physical",
    "power": 75,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -587,7 +714,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -597,7 +731,14 @@
    "category": "Physical",
    "power": 40,
    "priority": 1,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -607,7 +748,14 @@
    "category": "Physical",
    "power": 75,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -617,7 +765,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -627,7 +782,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 2,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -637,7 +799,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -647,7 +816,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -657,7 +833,14 @@
    "category": "Physical",
    "power": 85,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -667,7 +850,14 @@
    "category": "Physical",
    "power": 85,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -677,7 +867,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -687,7 +884,14 @@
    "category": "Physical",
    "power": 60,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": true,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -697,7 +901,14 @@
    "category": "Physical",
    "power": 75,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 90,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -707,7 +918,14 @@
    "category": "Physical",
    "power": 75,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -717,7 +935,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -727,7 +952,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -737,7 +969,14 @@
    "category": "Special",
    "power": 40,
    "priority": 1,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -747,7 +986,14 @@
    "category": "Special",
    "power": 95,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -757,7 +1003,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 90,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -767,7 +1020,14 @@
    "category": "Physical",
    "power": 40,
    "priority": 1,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -777,7 +1037,14 @@
    "category": "Physical",
    "power": 85,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 90,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -787,7 +1054,14 @@
    "category": "Physical",
    "power": 60,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -797,7 +1071,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -807,7 +1088,14 @@
    "category": "Special",
    "power": 80,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -817,7 +1105,14 @@
    "category": "Special",
    "power": 90,
    "priority": 0,
+   "attack_stat": "spa",
+   "defense_stat": "spd",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -827,7 +1122,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -837,7 +1139,14 @@
    "category": "Physical",
    "power": 60,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   },
   {
@@ -847,7 +1156,14 @@
    "category": "Physical",
    "power": 80,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": false
   },
   {
@@ -857,7 +1173,14 @@
    "category": "Physical",
    "power": 40,
    "priority": 0,
+   "attack_stat": "atk",
+   "defense_stat": "def",
    "accuracy": 100,
+   "never_misses": false,
+   "recoil": null,
+   "drain": null,
+   "multihit": null,
+   "effect": null,
    "ignored_secondary": true
   }
  ],

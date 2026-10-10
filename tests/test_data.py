@@ -145,3 +145,17 @@ def test_damage_intermediates_fit_int32():
     largest = 22 * int(T.move_power.max()) * int(T.species_stats[:, [ATK, SPA]].max())
     base = largest // int(T.species_stats[:, [DEF, SPD]].min()) // 50 + 2
     assert largest < 2**31 and base * 3 * 16 < 2**31
+
+
+def test_attack_and_defense_stats_follow_category_in_v1():
+    physical = T.move_category == 0
+    assert (T.move_attack_stat[physical] == ATK).all() and (T.move_defense_stat[physical] == DEF).all()
+    assert (T.move_attack_stat[~physical] == SPA).all() and (T.move_defense_stat[~physical] == SPD).all()
+
+
+def test_v1_moves_carry_the_step_5b_fields_unused():
+    assert RAW["rules"]["mechanics"] == []
+    for m in RAW["moves"]:
+        assert m["recoil"] is None and m["drain"] is None and m["multihit"] is None, m["id"]
+        assert m["effect"] is None, m["id"]
+        assert isinstance(m["never_misses"], bool)

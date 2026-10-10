@@ -29,6 +29,8 @@ class Tables:
     move_type: np.ndarray        # [M]
     move_power: np.ndarray       # [M]
     move_category: np.ndarray    # [M] PHYSICAL or SPECIAL
+    move_attack_stat: np.ndarray  # [M] stat index the attacker uses (ATK, SPA, or DEF for Body Press)
+    move_defense_stat: np.ndarray  # [M] stat index the defender uses (DEF or SPD)
     move_priority: np.ndarray    # [M]
     species_types: np.ndarray    # [S, 2] second is NO_TYPE for single-typed species
     species_stats: np.ndarray    # [S, 6] in STAT_KEYS order
@@ -61,6 +63,8 @@ def load_tables(path: Path = DATA_PATH) -> Tables:
         move_type=_frozen([type_index[m["type"]] for m in moves]),
         move_power=_frozen([m["power"] for m in moves]),
         move_category=_frozen([PHYSICAL if m["category"] == "Physical" else SPECIAL for m in moves]),
+        move_attack_stat=_frozen([STAT_KEYS.index(m["attack_stat"]) for m in moves]),
+        move_defense_stat=_frozen([STAT_KEYS.index(m["defense_stat"]) for m in moves]),
         move_priority=_frozen([m["priority"] for m in moves]),
         species_types=_frozen([
             [type_index[s["types"][0]], type_index[s["types"][1]] if len(s["types"]) > 1 else NO_TYPE]
