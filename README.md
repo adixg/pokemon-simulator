@@ -12,6 +12,7 @@ uv run pytest
 uv run pokearena play greedy random --seed 7 --save battle.json   # run and render a battle
 uv run pokearena play greedy random --teams garchomp,gengar,scizor/dragapult,lapras,tyranitar
 uv run pokearena show battle.json --step --verify                 # replay turn by turn, re-checking every event
+uv run python tools/bench_cpu.py                                   # CPU steps/sec baseline -> results/
 ```
 
 Agents: `random` (uniform over legal actions) and `greedy` (most damage this turn, never switches voluntarily).

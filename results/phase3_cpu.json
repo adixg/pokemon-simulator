@@ -1,0 +1,106 @@
+{
+ "machine": {
+  "cpu": "x86_64",
+  "python": "3.12.14",
+  "numpy": "2.5.3",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+ },
+ "settings": {
+  "seconds": 2.0,
+  "trials": 3,
+  "threads": "single (NumPy default)"
+ },
+ "rows": [
+  {
+   "engine": "reference",
+   "batch": 1,
+   "damage": "computed",
+   "env_steps_per_s": 91581.99334646805,
+   "end_to_end_per_s": 63912.40745488266
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 1,
+   "damage": "table",
+   "env_steps_per_s": 10724.111208251832,
+   "end_to_end_per_s": 7125.834908652898
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 16,
+   "damage": "table",
+   "env_steps_per_s": 148772.5727913964,
+   "end_to_end_per_s": 97253.13142154473
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 256,
+   "damage": "table",
+   "env_steps_per_s": 1403691.0092593776,
+   "end_to_end_per_s": 858490.1189137575
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 4096,
+   "damage": "table",
+   "env_steps_per_s": 3976393.3480695384,
+   "end_to_end_per_s": 2125050.1194340177
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 16384,
+   "damage": "table",
+   "env_steps_per_s": 4588558.853815617,
+   "end_to_end_per_s": 2488564.2276776093
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 65536,
+   "damage": "table",
+   "env_steps_per_s": 4510521.736223533,
+   "end_to_end_per_s": 2454609.647250369
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 1,
+   "damage": "computed",
+   "env_steps_per_s": 8153.202579318482,
+   "end_to_end_per_s": 5826.452660124248
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 16,
+   "damage": "computed",
+   "env_steps_per_s": 118836.19049504034,
+   "end_to_end_per_s": 84004.79160496364
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 256,
+   "damage": "computed",
+   "env_steps_per_s": 1044372.8855271814,
+   "end_to_end_per_s": 718836.102634094
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 4096,
+   "damage": "computed",
+   "env_steps_per_s": 2604909.7676397483,
+   "end_to_end_per_s": 1703796.3985916981
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 16384,
+   "damage": "computed",
+   "env_steps_per_s": 2811928.9509067032,
+   "end_to_end_per_s": 1830892.8011193422
+  },
+  {
+   "engine": "batched_numpy",
+   "batch": 65536,
+   "damage": "computed",
+   "env_steps_per_s": 2769607.177790523,
+   "end_to_end_per_s": 1802148.317507399
+  }
+ ]
+}
