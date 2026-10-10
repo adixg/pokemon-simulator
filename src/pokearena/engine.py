@@ -4,8 +4,10 @@ tested against this one.
 A battle is an immutable `Battle`; `step` returns a new one plus the events
 that happened, so search can branch from any state without copying.
 
-Phase 1 covers moves, damage, move order, fainting, victory and the turn
-limit. Switching (actions 4-6) and forced switches arrive in Phase 2.
+A normal turn resolves voluntary switches, then attacks in priority/speed
+order, then faints and the victory check. A faint with teammates left puts the
+battle in FORCED_SWITCH, where only the side(s) whose active Pokémon fainted
+choose a replacement; that phase is not a turn.
 """
 
 from dataclasses import dataclass, replace
@@ -71,18 +73,28 @@ def active_species(b: Battle, side: int) -> int:
     return b.teams[side][b.active[side]]
 
 
+def must_replace(b: Battle, side: int) -> bool:
+    """True when the side's active Pokémon has fainted and it must send in another."""
+    return b.phase == FORCED_SWITCH and b.hp[side][b.active[side]] == 0
+
+
 def action_mask(b: Battle, side: int) -> np.ndarray:
-    """Which of the 7 actions the side may take (RULES.md section 5)."""
+    """Which of the 7 actions the side may take (RULES.md section 5).
+
+    All false when the side has no decision: the battle is over, or the other
+    side is replacing a fainted Pokémon.
+    """
     mask = np.zeros(N_ACTIONS, dtype=bool)
     if b.phase == NORMAL:
         mask[:N_MOVES] = True
+    if b.phase == NORMAL or must_replace(b, side):
         for slot, hp in enumerate(b.hp[side]):
             mask[SWITCH_BASE + slot] = hp > 0 and slot != b.active[side]
     return mask
 
 
 def _order(t: Tables, b: Battle, moves: tuple[int, int], turn: int) -> tuple[int, str]:
-    """The side that acts first, and why (RULES.md section 6)."""
+    """The side that acts first when both attack, and why (RULES.md section 6)."""
     p0, p1 = (int(t.move_priority[m]) for m in moves)
     if p0 != p1:
         return (0 if p0 > p1 else 1), "priority"
@@ -93,47 +105,84 @@ def _order(t: Tables, b: Battle, moves: tuple[int, int], turn: int) -> tuple[int
 
 
 def step(b: Battle, actions: tuple[int, int], tables: Tables | None = None) -> tuple[Battle, list[dict]]:
-    """Resolve one turn. Returns the new battle and its events."""
+    """Resolve one turn, or one forced-switch phase. Returns the new battle and its events.
+
+    The action of a side with no decision (an all-false mask) is ignored.
+    """
     t = tables or load_tables()
     if b.phase == DONE:
         raise ValueError("the battle is over")
     for side, action in enumerate(actions):
-        if not action_mask(b, side)[action]:
+        mask = action_mask(b, side)
+        if mask.any() and not (0 <= action < N_ACTIONS and mask[action]):
             raise ValueError(f"side {side}: action {action} is not legal")
-        if action >= SWITCH_BASE:
-            raise NotImplementedError("switching arrives in Phase 2")
+    if b.phase == FORCED_SWITCH:
+        return _replace_fainted(b, actions)
 
     turn = b.turn + 1
-    moves = tuple(int(t.species_moves[active_species(b, side), actions[side]]) for side in (0, 1))
-    first, reason = _order(t, b, moves, turn)
-    events: list[dict] = [{"type": "order", "first": first, "reason": reason}]
+    active = list(b.active)
     hp = [list(b.hp[0]), list(b.hp[1])]
-    outcome = ONGOING
+    events: list[dict] = []
 
-    for side in (first, 1 - first):
+    # 1. Voluntary switches, before any attack.
+    for side in (0, 1):
+        if actions[side] >= SWITCH_BASE:
+            to = actions[side] - SWITCH_BASE
+            events.append({"type": "switch", "side": side, "from": active[side], "to": to, "forced": False})
+            active[side] = to
+
+    # 2-4. Attacks: priority, then speed, then the seeded tie breaker.
+    attackers = [side for side in (0, 1) if actions[side] < SWITCH_BASE]
+    moves = {side: int(t.species_moves[active_species(b, side), actions[side]]) for side in attackers}
+    if len(attackers) == 2:
+        first, reason = _order(t, b, (moves[0], moves[1]), turn)
+        events.append({"type": "order", "first": first, "reason": reason})
+        attackers = [first, 1 - first]
+
+    # 5-6. Faints cancel the fainted Pokémon's move; an empty team loses.
+    outcome = ONGOING
+    for side in attackers:
         foe = 1 - side
-        attacker, defender = active_species(b, side), active_species(b, foe)
-        if hp[side][b.active[side]] == 0:
-            break                                   # fainted before acting: move cancelled
-        dealt = min(damage(t, attacker, defender, moves[side]), hp[foe][b.active[foe]])
-        hp[foe][b.active[foe]] -= dealt
+        if hp[side][active[side]] == 0:
+            continue
+        defender = b.teams[foe][active[foe]]
+        dealt = min(damage(t, b.teams[side][active[side]], defender, moves[side]), hp[foe][active[foe]])
+        hp[foe][active[foe]] -= dealt
         events.append({
-            "type": "move", "side": side, "move": t.move_ids[moves[side]],
+            "type": "move", "side": side, "move": t.move_ids[moves[side]], "target": t.species_ids[defender],
             "damage": dealt, "eff4": effectiveness4(t, int(t.move_type[moves[side]]), defender),
-            "hp_after": hp[foe][b.active[foe]],
+            "hp_after": hp[foe][active[foe]],
         })
-        if hp[foe][b.active[foe]] == 0:
-            events.append({"type": "faint", "side": foe, "slot": b.active[foe]})
-            if any(hp[foe]):
-                raise NotImplementedError("forced switches arrive in Phase 2")
-            outcome = side
+        if hp[foe][active[foe]] == 0:
+            events.append({"type": "faint", "side": foe, "slot": active[foe]})
+            if not any(hp[foe]):
+                outcome = side
+                break
 
     if outcome == ONGOING and turn >= TURN_LIMIT:
         outcome = DRAW
+    replacing = [side for side in (0, 1) if hp[side][active[side]] == 0]
     if outcome != ONGOING:
-        events.append({"type": "end", "outcome": outcome, "reason": "turn_limit" if outcome == DRAW else "all_fainted"})
-    nxt = replace(
-        b, hp=(tuple(hp[0]), tuple(hp[1])), turn=turn, outcome=outcome,
-        phase=DONE if outcome != ONGOING else NORMAL,
-    )
+        phase = DONE
+        events.append({"type": "end", "outcome": outcome,
+                       "reason": "turn_limit" if outcome == DRAW else "all_fainted"})
+    elif replacing:
+        phase = FORCED_SWITCH
+        events.append({"type": "forced_switch", "sides": replacing})
+    else:
+        phase = NORMAL
+    nxt = replace(b, hp=(tuple(hp[0]), tuple(hp[1])), active=(active[0], active[1]),
+                  phase=phase, turn=turn, outcome=outcome)
     return nxt, events
+
+
+def _replace_fainted(b: Battle, actions: tuple[int, int]) -> tuple[Battle, list[dict]]:
+    """The forced-switch phase: each side whose active Pokémon fainted sends in its choice."""
+    active = list(b.active)
+    events = []
+    for side in (0, 1):
+        if must_replace(b, side):
+            to = actions[side] - SWITCH_BASE
+            events.append({"type": "switch", "side": side, "from": active[side], "to": to, "forced": True})
+            active[side] = to
+    return replace(b, active=(active[0], active[1]), phase=NORMAL), events

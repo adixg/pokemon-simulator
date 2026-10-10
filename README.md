@@ -8,7 +8,13 @@ A deliberately simplified Pokémon battle environment for high-throughput simula
 uv sync
 uv run python tools/build_data.py   # rebuild data/pokearena_v1.json from Showdown's data
 uv run pytest
+
+uv run pokearena play greedy random --seed 7 --save battle.json   # run and render a battle
+uv run pokearena play greedy random --teams garchomp,gengar,scizor/dragapult,lapras,tyranitar
+uv run pokearena show battle.json --step --verify                 # replay turn by turn, re-checking every event
 ```
+
+Agents: `random` (uniform over legal actions) and `greedy` (most damage this turn, never switches voluntarily).
 
 `data/pokearena_v1.json` is committed, so building it is only needed after changing the roster or the move rules. The raw Showdown files are downloaded to `data/raw/` (gitignored); `--refresh` re-downloads them.
 

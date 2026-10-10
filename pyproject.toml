@@ -3,7 +3,13 @@ name = "pokearena"
 version = "0.1.0"
 description = "A simplified Pokémon battle environment for high-throughput simulation, search and RL"
 requires-python = ">=3.12"
-dependencies = ["numpy>=2.0"]
+dependencies = [
+    "numpy>=2.0",
+    "rich>=15.0.0",
+]
+
+[project.scripts]
+pokearena = "pokearena.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8"]
