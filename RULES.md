@@ -60,6 +60,13 @@ Version 1 excludes:
 
 Moves are treated as 100% accurate in v1.
 
+Two clarifications define which real moves are eligible:
+
+- **Accuracy at least 90%.** Moves below that (Hydro Pump, Fire Blast, Stone Edge) are not used, since treating them as perfectly accurate would make them strictly better than their reliable counterparts. The real accuracy is kept in the data for when accuracy is introduced.
+- **Chance-based secondary effects are ignored, not excluded.** Flamethrower is a 90-power Fire move; its 10% burn chance does not exist in v1. Excluding every such move would leave Fire, Ice and Electric with almost no usable attacks. Moves whose extra effect always happens (recoil, draining, stat changes on the user, multi-hit) or whose power depends on battle state remain excluded. The data marks affected moves with `ignored_secondary`.
+
+The move data is built by `tools/build_data.py` from Pokémon Showdown's published data files, which enforces these rules and checks every loadout is learnable by its species.
+
 ## 4. Damage
 
 Physical moves use Attack and Defense.

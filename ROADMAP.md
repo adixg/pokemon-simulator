@@ -4,7 +4,7 @@ Rules of the environment are in `RULES.md`. The scope is phases 0–9. Phases 10
 
 | Phase | Build | Success criterion |
 |---|---|---|
-| **0. Data** | Export ~30 species, type chart, ~100 simple moves from Showdown into compact JSON/arrays | Static tables validated |
+| **0. Data** ✅ | Export 30 species, the type chart, and the 46 moves their loadouts use from Showdown into compact JSON/arrays | Static tables validated |
 | **1. CPU 1v1** | Python reference engine: damage, types, move ordering, fainting | Thousands of randomized unit tests pass |
 | **2. CPU 3v3** | Switching, forced switching, action masks, turn limit, full battle loop, replay JSON, terminal renderer | Greedy/random agents can complete battles; any replay renders turn by turn |
 | **3. Batched CPU** | Structure-of-arrays representation; remove object-heavy hot path | Establish CPU steps/sec baseline |
